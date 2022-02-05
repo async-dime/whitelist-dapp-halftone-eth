@@ -204,7 +204,7 @@ export default function Home() {
       if (joinedWhitelist) {
         return (
           <div className={styles.description}>
-            Thanks for joining the Whitelist!
+            <i>Thanks for joining the Whitelist!</i>
           </div>
         );
       } else if (loading) {
@@ -252,12 +252,15 @@ export default function Home() {
       <div className={styles.main}>
         <Toast toastList={list} />
         <div>
-          <h1 className={styles.header}>Welcome to Crypto Devs!</h1>
+          <h1 className={styles.header}>
+            <b>Welcome to Crypto Devs!</b>
+          </h1>
           <div className={styles.description}>
             Its an NFT collection for developers in Crypto.
           </div>
           <div className={styles.description}>
-            {numberOfWhitelisted} have already joined the Whitelist
+            <span className={styles.whitelistNumber}><b>{numberOfWhitelisted} / 20 </b></span>
+            have already joined the Whitelist
           </div>
           {renderButton()}
         </div>

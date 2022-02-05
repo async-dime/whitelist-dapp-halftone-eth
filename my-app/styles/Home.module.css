@@ -72,6 +72,7 @@
 .header,
 .btnGrad,
 .footerText,
+.whitelistNumber,
 .progressBar {
   background-image: linear-gradient(
     to right,
@@ -81,7 +82,8 @@
   );
 }
 .header,
-.footerText {
+.footerText,
+.whitelistNumber {
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
