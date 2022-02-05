@@ -58,19 +58,29 @@
 }
 
 .button {
-  border-radius: 4px;
-  background-color: blue;
   border: none;
+  border-radius: 10px;
   color: #ffffff;
   font-size: 15px;
   padding: 20px;
   width: 200px;
   cursor: pointer;
   margin-bottom: 2%;
+  background-size: 300% auto;
+  transition: 0.5s;
+}
+.button:hover {
+  box-shadow: 0 0 0.5px 0.5px var(--button-border);
+  background-position: right center;
+  color: #fff;
+  text-decoration: none;
+}
+.button:active {
+  transform: translateY(5px);
 }
 
 .header,
-.btnGrad,
+.button,
 .footerText,
 .whitelistNumber,
 .progressBar {
