@@ -1,11 +1,21 @@
 import Head from 'next/head';
-import styles from '../styles/Home.module.css';
 import Web3Modal from 'web3modal';
+import styles from '../styles/Home.module.css';
+import ProgressBar from '@badrap/bar-of-progress';
 import { providers, Contract } from 'ethers';
 import { useEffect, useRef, useState } from 'react';
 import { WHITELIST_CONTRACT_ADDRESS, abi } from '../constants';
+import Toast from '../components/Toast';
+
+const BarOfProgress = new ProgressBar({
+  size: 4,
+  color: '#d38312',
+  className: `${styles.progressBar}`,
+  delay: 150,
+});
 
 export default function Home() {
+  const [list, setList] = useState([]); // list of toasts
   // walletConnected keep track of whether the user's wallet is connected or not
   const [walletConnected, setWalletConnected] = useState(false);
   // joinedWhitelist keeps track of whether the current metamask address has joined the Whitelist or not
@@ -16,6 +26,40 @@ export default function Home() {
   const [numberOfWhitelisted, setNumberOfWhitelisted] = useState(0);
   // Create a reference to the Web3 Modal (used for connecting to Metamask) which persists as long as the page is open
   const web3ModalRef = useRef();
+
+  const TWITTER_HANDLE = 'p0tat0H8';
+  const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+
+  let toastProperties = null;
+
+  const showToast = (type, text) => {
+    const id = Date.now();
+    const desc = text.toString();
+
+    switch (type) {
+      case 'success':
+        toastProperties = {
+          id,
+          title: 'Success',
+          description: desc,
+          backgroundColor: '#5cb85c',
+          icon: 'checkIcon',
+        };
+        break;
+      case 'error':
+        toastProperties = {
+          id,
+          title: 'Error',
+          description: desc,
+          backgroundColor: '#d9534f',
+          icon: 'errorIcon',
+        };
+        break;
+      default:
+        setList([]);
+    }
+    setList([...list, toastProperties]);
+  };
 
   /**
    * Returns a Provider or Signer object representing the Ethereum RPC with or without the
@@ -38,7 +82,7 @@ export default function Home() {
     // If user is not connected to the Rinkeby network, let them know and throw an error
     const { chainId } = await web3Provider.getNetwork();
     if (chainId !== 4) {
-      window.alert('Change the network to Rinkeby');
+      showToast('error', 'Change the network to Rinkeby');
       throw new Error('Change network to Rinkeby');
     }
 
@@ -65,15 +109,19 @@ export default function Home() {
       );
       // call the addAddressToWhitelist from the contract
       const tx = await whitelistContract.addAddressToWhitelist();
+      BarOfProgress.start(5000);
       setLoading(true);
       // wait for the transaction to get mined
       await tx.wait();
+      BarOfProgress.finish();
       setLoading(false);
+      showToast('success', "You've been added to the whitelist!");
       // get the updated number of addresses in the whitelist
       await getNumberOfWhitelisted();
       setJoinedWhitelist(true);
     } catch (err) {
       console.error(err);
+      showToast('danger', err.message);
     }
   };
 
@@ -98,6 +146,7 @@ export default function Home() {
       setNumberOfWhitelisted(_numberOfWhitelisted);
     } catch (err) {
       console.error(err);
+      showToast('danger', err.message);
     }
   };
 
@@ -121,9 +170,11 @@ export default function Home() {
       const _joinedWhitelist = await whitelistContract.whitelistedAddresses(
         address
       );
+      showToast('success', "You're already on whitelist!");
       setJoinedWhitelist(_joinedWhitelist);
     } catch (err) {
       console.error(err);
+      showToast('danger', err.message);
     }
   };
 
@@ -141,6 +192,7 @@ export default function Home() {
       getNumberOfWhitelisted();
     } catch (err) {
       console.error(err);
+      showToast('danger', err.message);
     }
   };
 
@@ -195,11 +247,12 @@ export default function Home() {
       <Head>
         <title>Whitelist Dapp</title>
         <meta name="description" content="Whitelist-Dapp" />
-        <link rel="icon" href="/favicon.ico" />
+        <link rel="icon" href="/eth.ico" />
       </Head>
       <div className={styles.main}>
+        <Toast toastList={list} />
         <div>
-          <h1 className={styles.title}>Welcome to Crypto Devs!</h1>
+          <h1 className={styles.header}>Welcome to Crypto Devs!</h1>
           <div className={styles.description}>
             Its an NFT collection for developers in Crypto.
           </div>
@@ -209,12 +262,23 @@ export default function Home() {
           {renderButton()}
         </div>
         <div>
-          <img className={styles.image} src="./crypto-devs.svg" />
+          <img className={styles.image} src="./eth.svg" />
         </div>
       </div>
 
       <footer className={styles.footer}>
-        Made with &#10084; by Crypto Devs
+        <img
+          alt="Twitter Logo"
+          className={styles.twitterLogo}
+          src="./twitter.svg"
+        />
+        {'  '}
+        <a
+          className={styles.footerText}
+          href={TWITTER_LINK}
+          target="_blank"
+          rel="noopener noreferrer"
+        >{`built by @${TWITTER_HANDLE}`}</a>
       </footer>
     </div>
   );

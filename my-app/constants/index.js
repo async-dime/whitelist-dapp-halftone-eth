@@ -2,4 +2,4 @@ import contractArtifact from '../utils/Whitelist.json';
 
 export const abi = contractArtifact.abi;
 export const WHITELIST_CONTRACT_ADDRESS =
-  '0x1B2E6B1cDf555C4A865af7da42CDecA17E1A8614';
+  '0x3e511760842840734faeC0e5d5C7e35CA8e3Eb69';

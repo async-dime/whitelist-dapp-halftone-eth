@@ -1,3 +1,27 @@
+.theme-dark {
+  --dark-text: #292929;
+  --light-text: #f9f8f8;
+  --dark-background: #2f4550;
+  --light-background: #586f7c;
+  --accent: #b8dbd9;
+  --button-border: #b8dbd9;
+}
+
+.theme-light {
+  --dark-text: #5e4b56;
+  --light-text: #5e4b56;
+  --dark-background: #dbe7e4;
+  --light-background: #eddcd2;
+  --accent: #dbe7e4;
+  --button-border: #5e4b56;
+}
+
+#root {
+  background-color: var(--dark-background) !important;
+  color: var(--dark-text);
+  margin: 0;
+}
+
 .main {
   min-height: 90vh;
   display: flex;
@@ -21,7 +45,7 @@
   margin-left: 20%;
 }
 
-.title {
+.header {
   font-size: 2rem;
   margin: 2rem 0;
 }
@@ -30,6 +54,7 @@
   line-height: 1;
   margin: 2rem 0;
   font-size: 1.2rem;
+  color: var(--light-text);
 }
 
 .button {
@@ -43,6 +68,30 @@
   cursor: pointer;
   margin-bottom: 2%;
 }
+
+.header,
+.btnGrad,
+.footerText,
+.progressBar {
+  background-image: linear-gradient(
+    to right,
+    #d38312 0%,
+    #a83279 51%,
+    #d38312 90%
+  );
+}
+.header,
+.footerText {
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.twitterLogo {
+  width: 25px;
+  height: 25px;
+}
+
 @media (max-width: 1000px) {
   .main {
     width: 100%;
