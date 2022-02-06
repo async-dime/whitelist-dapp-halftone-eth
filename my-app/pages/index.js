@@ -245,7 +245,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Whitelist Dapp</title>
+        <title>Whitelist Halftone-Ethereum Dapp</title>
         <meta name="description" content="Whitelist-Dapp" />
         <link rel="icon" href="/eth.ico" />
       </Head>
@@ -253,13 +253,16 @@ export default function Home() {
         <Toast toastList={list} />
         <div>
           <h1 className={styles.header}>
-            <b>Welcome to Crypto Devs!</b>
+            <b>Halftone-Ethereum</b>
           </h1>
           <div className={styles.description}>
-            Its an NFT collection for developers in Crypto.
+            This is a whitelist page of Halftone-Ethereum NFT collection: a
+            multi-variant halftone version of Ethereum icon.
           </div>
           <div className={styles.description}>
-            <span className={styles.whitelistNumber}><b>{numberOfWhitelisted} / 20 </b></span>
+            <span className={styles.whitelistNumber}>
+              <b>{numberOfWhitelisted} / 20 </b>
+            </span>
             have already joined the Whitelist
           </div>
           {renderButton()}
