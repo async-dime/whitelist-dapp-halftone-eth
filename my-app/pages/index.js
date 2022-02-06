@@ -245,7 +245,7 @@ export default function Home() {
   return (
     <div>
       <Head>
-        <title>Whitelist Halftone-Ethereum Dapp</title>
+        <title>Halftone ETH Whitelist</title>
         <meta name="description" content="Whitelist-Dapp" />
         <link rel="icon" href="/eth.ico" />
       </Head>
@@ -253,7 +253,7 @@ export default function Home() {
         <Toast toastList={list} />
         <div>
           <h1 className={styles.header}>
-            <b>Halftone-Ethereum</b>
+            <b>Halftone-Ethereum Whitelist</b>
           </h1>
           <div className={styles.description}>
             This is a whitelist page of Halftone-Ethereum NFT collection: a
